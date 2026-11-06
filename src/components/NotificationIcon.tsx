@@ -1,7 +1,8 @@
+import type { LucideIcon } from "lucide-react";
 import { BadgeCheck, HandHeart, PackageCheck, PackagePlus, ShieldAlert, UserPlus, XCircle } from "lucide-react";
 import type { NotificationType } from "@/lib/types";
 
-const MAP: Record<NotificationType, { icon: typeof Bell; cls: string }> = {
+const MAP: Record<NotificationType, { icon: LucideIcon; cls: string }> = {
   "donation:new": { icon: PackagePlus, cls: "bg-primary-soft text-primary" },
   "donation:claimed": { icon: HandHeart, cls: "bg-info-soft text-info" },
   "donation:collected": { icon: PackageCheck, cls: "bg-success-soft text-success" },
@@ -10,8 +11,6 @@ const MAP: Record<NotificationType, { icon: typeof Bell; cls: string }> = {
   "ngo:rejected": { icon: ShieldAlert, cls: "bg-destructive-soft text-destructive" },
   "ngo:registered": { icon: UserPlus, cls: "bg-warm-soft text-warm" },
 };
-
-type Bell = typeof PackagePlus;
 
 export function NotificationIcon({ type }: { type: NotificationType }) {
   const { icon: Icon, cls } = MAP[type] ?? MAP["donation:new"];
