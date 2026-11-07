@@ -1,7 +1,7 @@
 import { UtensilsCrossed } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export function FoodImage({ src, alt, className }: { src?: string | null; alt: string; className?: string }) {
+export function FoodImage({ src, alt, className }: { src?: string | null | undefined; alt: string; className?: string | undefined }) {
   if (!src)
     return (
       <div className={cn("grid size-full place-items-center bg-primary-soft text-primary", className)}>

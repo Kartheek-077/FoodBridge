@@ -13,16 +13,16 @@ export interface User {
   address: string;
   createdAt: string;
   /** Donor only */
-  organizationType?: OrgType;
+  organizationType?: OrgType | undefined;
   /** NGO only */
-  organizationName?: string;
-  registrationNumber?: string;
-  serviceArea?: string;
-  verificationStatus?: VerificationStatus;
-  verificationDocumentUrl?: string | null;
-  verificationDocumentName?: string | null;
-  rejectionReason?: string | null;
-  verifiedAt?: string | null;
+  organizationName?: string | undefined;
+  registrationNumber?: string | undefined;
+  serviceArea?: string | undefined;
+  verificationStatus?: VerificationStatus | undefined;
+  verificationDocumentUrl?: string | null | undefined;
+  verificationDocumentName?: string | null | undefined;
+  rejectionReason?: string | null | undefined;
+  verifiedAt?: string | null | undefined;
 }
 
 export type DonationStatus = "available" | "claimed" | "collected" | "expired" | "cancelled";
@@ -34,13 +34,13 @@ export interface DonationClaim {
   ngoName: string;
   ngoPhone: string;
   claimedAt: string;
-  pickupTime?: string | null;
+  pickupTime?: string | null | undefined;
 }
 
 export interface DonationHistoryEntry {
   status: DonationStatus | "posted" | "pickup_scheduled";
   at: string;
-  note?: string;
+  note?: string | undefined;
 }
 
 export interface Donation {
@@ -50,29 +50,29 @@ export interface Donation {
   foodType: FoodType;
   quantity: number;
   unit: QuantityUnit;
-  imageUrl?: string | null;
+  imageUrl?: string | null | undefined;
   pickupAddress: string;
   pickupWindowStart: string;
   pickupWindowEnd: string;
   expiresAt: string;
-  notes?: string;
+  notes?: string | undefined;
   status: DonationStatus;
   donor: {
     id: string;
     name: string;
-    organizationType?: OrgType;
+    organizationType?: OrgType | undefined;
     phone: string;
   };
-  claim?: DonationClaim | null;
-  collectedAt?: string | null;
-  cancelledAt?: string | null;
-  expiredAt?: string | null;
-  cancelReason?: string | null;
-  location?: { lat: number; lng: number } | null;
-  distanceKm?: number | null;
+  claim?: DonationClaim | null | undefined;
+  collectedAt?: string | null | undefined;
+  cancelledAt?: string | null | undefined;
+  expiredAt?: string | null | undefined;
+  cancelReason?: string | null | undefined;
+  location?: { lat: number; lng: number } | null | undefined;
+  distanceKm?: number | null | undefined;
   createdAt: string;
   updatedAt: string;
-  history?: DonationHistoryEntry[];
+  history?: DonationHistoryEntry[] | undefined;
 }
 
 export type NotificationType =
@@ -90,7 +90,7 @@ export interface AppNotification {
   type: NotificationType;
   title: string;
   message: string;
-  donationId?: string | null;
+  donationId?: string | null | undefined;
   read: boolean;
   createdAt: string;
 }
@@ -98,7 +98,7 @@ export interface AppNotification {
 /** Payload pushed over the socket for every real-time event. */
 export interface SocketEventPayload {
   notification: AppNotification;
-  donation?: Donation | null;
+  donation?: Donation | null | undefined;
 }
 
 export interface Paginated<T> {
@@ -112,13 +112,13 @@ export interface AdminStats {
   mealsSaved: number;
   activeDonors: number;
   verifiedNgos: number;
-  pendingNgos?: number;
-  totalDonations?: number;
-  totalUsers?: number;
-  byStatus?: Record<DonationStatus, number>;
-  byFoodType?: { name: string; value: number }[];
-  daily?: { date: string; posted: number; collected: number }[];
-  byOrgType?: { name: string; value: number }[];
+  pendingNgos?: number | undefined;
+  totalDonations?: number | undefined;
+  totalUsers?: number | undefined;
+  byStatus?: Record<DonationStatus, number> | undefined;
+  byFoodType?: { name: string; value: number }[] | undefined;
+  daily?: { date: string; posted: number; collected: number }[] | undefined;
+  byOrgType?: { name: string; value: number }[] | undefined;
 }
 
 export interface AuthResponse {
@@ -127,12 +127,12 @@ export interface AuthResponse {
 }
 
 export interface DonationListParams {
-  status?: DonationStatus;
-  foodType?: FoodType;
-  search?: string;
-  page?: number;
-  location?: string;
-  expiringSoon?: boolean;
+  status?: DonationStatus | undefined;
+  foodType?: FoodType | undefined;
+  search?: string | undefined;
+  page?: number | undefined;
+  location?: string | undefined;
+  expiringSoon?: boolean | undefined;
 }
 
 export interface DonorRegisterPayload {
@@ -169,6 +169,6 @@ export interface DonationInput {
   pickupWindowStart: string;
   pickupWindowEnd: string;
   expiresAt: string;
-  notes?: string;
-  image?: File | null;
+  notes?: string | undefined;
+  image?: File | null | undefined;
 }

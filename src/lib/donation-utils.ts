@@ -49,8 +49,8 @@ export interface TrackingStep {
   key: "posted" | "claimed" | "pickup_scheduled" | "collected" | "expired" | "cancelled";
   label: string;
   state: StepState;
-  at?: string | null;
-  description?: string;
+  at?: string | null | undefined;
+  description?: string | undefined;
 }
 
 /**
@@ -103,7 +103,8 @@ export function computeTrackingSteps(d: Donation): TrackingStep[] {
   }
 
   const firstUpcoming = base.findIndex((s) => s.state === "upcoming");
-  if (firstUpcoming >= 0) base[firstUpcoming].state = "current";
+  const next = base[firstUpcoming];
+  if (next) next.state = "current";
   return base;
 }
 
