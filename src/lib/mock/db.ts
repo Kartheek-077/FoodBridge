@@ -27,7 +27,7 @@ export const DEMO_ACCOUNTS = [
   { label: "Admin", email: "admin@foodbridge.org", password: "password123" },
 ] as const;
 
-export const AREAS: Record<string, { lat: number; lng: number }> = {
+export const AREAS = {
   "Banjara Hills": { lat: 17.4156, lng: 78.4347 },
   Gachibowli: { lat: 17.4401, lng: 78.3489 },
   Kukatpally: { lat: 17.4948, lng: 78.3996 },
@@ -36,7 +36,7 @@ export const AREAS: Record<string, { lat: number; lng: number }> = {
   Ameerpet: { lat: 17.4375, lng: 78.4482 },
   "Jubilee Hills": { lat: 17.4326, lng: 78.4071 },
   Begumpet: { lat: 17.4447, lng: 78.4664 },
-};
+} satisfies Record<string, { lat: number; lng: number }>;
 
 let idCounter = 0;
 export function newId(prefix: string) {

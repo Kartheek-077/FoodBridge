@@ -10,11 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DonorRouteImport } from './routes/donor'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as NgoRouteImport } from './routes/ngo'
+import { Route as PendingVerificationRouteImport } from './routes/pending-verification'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as DonorIndexRouteImport } from './routes/donor.index'
+import { Route as NgoIndexRouteImport } from './routes/ngo.index'
+import { Route as DonorDonationsNewRouteImport } from './routes/donor.donations.new'
+import { Route as DonorDonationsIdEditRouteImport } from './routes/donor.donations.$id.edit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonorRoute = DonorRouteImport.update({
+  id: '/donor',
+  path: '/donor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -22,31 +35,121 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NgoRoute = NgoRouteImport.update({
+  id: '/ngo',
+  path: '/ngo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PendingVerificationRoute = PendingVerificationRouteImport.update({
+  id: '/pending-verification',
+  path: '/pending-verification',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonorIndexRoute = DonorIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DonorRoute,
+} as any)
+const NgoIndexRoute = NgoIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => NgoRoute,
+} as any)
+const DonorDonationsNewRoute = DonorDonationsNewRouteImport.update({
+  id: '/donations/new',
+  path: '/donations/new',
+  getParentRoute: () => DonorRoute,
+} as any)
+const DonorDonationsIdEditRoute = DonorDonationsIdEditRouteImport.update({
+  id: '/donations/$id/edit',
+  path: '/donations/$id/edit',
+  getParentRoute: () => DonorRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/donor': typeof DonorRouteWithChildren
   '/login': typeof LoginRoute
+  '/ngo': typeof NgoRouteWithChildren
+  '/pending-verification': typeof PendingVerificationRoute
+  '/register': typeof RegisterRoute
+  '/donor/': typeof DonorIndexRoute
+  '/ngo/': typeof NgoIndexRoute
+  '/donor/donations/new': typeof DonorDonationsNewRoute
+  '/donor/donations/$id/edit': typeof DonorDonationsIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/pending-verification': typeof PendingVerificationRoute
+  '/register': typeof RegisterRoute
+  '/donor': typeof DonorIndexRoute
+  '/ngo': typeof NgoIndexRoute
+  '/donor/donations/new': typeof DonorDonationsNewRoute
+  '/donor/donations/$id/edit': typeof DonorDonationsIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/donor': typeof DonorRouteWithChildren
   '/login': typeof LoginRoute
+  '/ngo': typeof NgoRouteWithChildren
+  '/pending-verification': typeof PendingVerificationRoute
+  '/register': typeof RegisterRoute
+  '/donor/': typeof DonorIndexRoute
+  '/ngo/': typeof NgoIndexRoute
+  '/donor/donations/new': typeof DonorDonationsNewRoute
+  '/donor/donations/$id/edit': typeof DonorDonationsIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login'
+  fullPaths:
+    | '/'
+    | '/donor'
+    | '/login'
+    | '/ngo'
+    | '/pending-verification'
+    | '/register'
+    | '/donor/'
+    | '/ngo/'
+    | '/donor/donations/new'
+    | '/donor/donations/$id/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login'
-  id: '__root__' | '/' | '/login'
+  to:
+    | '/'
+    | '/login'
+    | '/pending-verification'
+    | '/register'
+    | '/donor'
+    | '/ngo'
+    | '/donor/donations/new'
+    | '/donor/donations/$id/edit'
+  id:
+    | '__root__'
+    | '/'
+    | '/donor'
+    | '/login'
+    | '/ngo'
+    | '/pending-verification'
+    | '/register'
+    | '/donor/'
+    | '/ngo/'
+    | '/donor/donations/new'
+    | '/donor/donations/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DonorRoute: typeof DonorRouteWithChildren
   LoginRoute: typeof LoginRoute
+  NgoRoute: typeof NgoRouteWithChildren
+  PendingVerificationRoute: typeof PendingVerificationRoute
+  RegisterRoute: typeof RegisterRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +161,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/donor': {
+      id: '/donor'
+      path: '/donor'
+      fullPath: '/donor'
+      preLoaderRoute: typeof DonorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -65,12 +175,89 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ngo': {
+      id: '/ngo'
+      path: '/ngo'
+      fullPath: '/ngo'
+      preLoaderRoute: typeof NgoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pending-verification': {
+      id: '/pending-verification'
+      path: '/pending-verification'
+      fullPath: '/pending-verification'
+      preLoaderRoute: typeof PendingVerificationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/donor/': {
+      id: '/donor/'
+      path: '/'
+      fullPath: '/donor/'
+      preLoaderRoute: typeof DonorIndexRouteImport
+      parentRoute: typeof DonorRoute
+    }
+    '/ngo/': {
+      id: '/ngo/'
+      path: '/'
+      fullPath: '/ngo/'
+      preLoaderRoute: typeof NgoIndexRouteImport
+      parentRoute: typeof NgoRoute
+    }
+    '/donor/donations/new': {
+      id: '/donor/donations/new'
+      path: '/donations/new'
+      fullPath: '/donor/donations/new'
+      preLoaderRoute: typeof DonorDonationsNewRouteImport
+      parentRoute: typeof DonorRoute
+    }
+    '/donor/donations/$id/edit': {
+      id: '/donor/donations/$id/edit'
+      path: '/donations/$id/edit'
+      fullPath: '/donor/donations/$id/edit'
+      preLoaderRoute: typeof DonorDonationsIdEditRouteImport
+      parentRoute: typeof DonorRoute
+    }
   }
 }
 
+interface DonorRouteChildren {
+  DonorIndexRoute: typeof DonorIndexRoute
+  DonorDonationsNewRoute: typeof DonorDonationsNewRoute
+  DonorDonationsIdEditRoute: typeof DonorDonationsIdEditRoute
+}
+
+const DonorRouteChildren: DonorRouteChildren = {
+  DonorIndexRoute: DonorIndexRoute,
+  DonorDonationsNewRoute: DonorDonationsNewRoute,
+  DonorDonationsIdEditRoute: DonorDonationsIdEditRoute,
+}
+
+const DonorRouteWithChildren = DonorRoute._addFileChildren(DonorRouteChildren)
+
+interface NgoRouteChildren {
+  NgoIndexRoute: typeof NgoIndexRoute
+}
+
+const NgoRouteChildren: NgoRouteChildren = {
+  NgoIndexRoute: NgoIndexRoute,
+}
+
+const NgoRouteWithChildren = NgoRoute._addFileChildren(NgoRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DonorRoute: DonorRouteWithChildren,
   LoginRoute: LoginRoute,
+  NgoRoute: NgoRouteWithChildren,
+  PendingVerificationRoute: PendingVerificationRoute,
+  RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
