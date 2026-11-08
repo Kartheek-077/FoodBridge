@@ -6,7 +6,7 @@ export function StatusBadge({ status }: { status: DonationStatus }) {
   return <Badge variant={status}>{STATUS_LABELS[status]}</Badge>;
 }
 
-export function VerificationBadge({ status }: { status?: VerificationStatus }) {
+export function VerificationBadge({ status }: { status?: VerificationStatus | undefined }) {
   if (status === "verified") return <Badge variant="available">Verified</Badge>;
   if (status === "rejected") return <Badge variant="cancelled">Rejected</Badge>;
   return <Badge variant="warning">Pending review</Badge>;

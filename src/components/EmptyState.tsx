@@ -9,7 +9,7 @@ export function EmptyState({
 }: {
   icon: LucideIcon;
   title: string;
-  description?: string;
+  description?: string | undefined;
   action?: ReactNode;
 }) {
   return (
@@ -24,7 +24,7 @@ export function EmptyState({
   );
 }
 
-export function ErrorState({ message, onRetry }: { message: string; onRetry?: () => void }) {
+export function ErrorState({ message, onRetry }: { message: string; onRetry?: (() => void) | undefined }) {
   return (
     <div className="rounded-2xl border border-destructive/30 bg-destructive-soft px-6 py-8 text-center">
       <p className="font-medium text-destructive">{message}</p>
