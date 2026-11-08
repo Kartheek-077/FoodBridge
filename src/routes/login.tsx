@@ -20,8 +20,6 @@ export const Route = createFileRoute("/login")({
     const r = s["redirect"];
     return { redirect: typeof r === "string" && r.startsWith("/") ? r : undefined };
   },
-  _x: ({
-  }),
   head: () => ({
     meta: [
       { title: "Log in — FoodBridge" },
