@@ -70,7 +70,7 @@ export function useDeleteDonation() {
 export function useClaimDonation() {
   const invalidate = useInvalidateDonations();
   return useMutation({
-    mutationFn: ({ id, pickupTime }: { id: string; pickupTime?: string }) => donationsApi.claim(id, pickupTime),
+    mutationFn: ({ id, pickupTime }: { id: string; pickupTime?: string | undefined }) => donationsApi.claim(id, pickupTime),
     onSuccess: () => {
       invalidate();
       toast.success("Donation claimed", { description: "The donor has been notified of your pickup time." });
@@ -82,7 +82,7 @@ export function useClaimDonation() {
 export function useUpdateDonationStatus() {
   const invalidate = useInvalidateDonations();
   return useMutation({
-    mutationFn: ({ id, status, reason }: { id: string; status: "collected" | "cancelled"; reason?: string }) =>
+    mutationFn: ({ id, status, reason }: { id: string; status: "collected" | "cancelled"; reason?: string | undefined }) =>
       donationsApi.updateStatus(id, status, reason),
     onSuccess: (_d, v) => {
       invalidate();
@@ -95,7 +95,7 @@ export function useUpdateDonationStatus() {
 export function useVerifyNgo() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, action, reason }: { id: string; action: "approve" | "reject"; reason?: string }) =>
+    mutationFn: ({ id, action, reason }: { id: string; action: "approve" | "reject"; reason?: string | undefined }) =>
       adminApi.verifyNgo(id, action, reason),
     onSuccess: (_u, v) => {
       void qc.invalidateQueries({ queryKey: ["admin"] });

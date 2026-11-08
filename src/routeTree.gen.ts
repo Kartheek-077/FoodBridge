@@ -10,11 +10,16 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as DonorRouteImport } from './routes/donor'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as NgoRouteImport } from './routes/ngo'
+import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as PendingVerificationRouteImport } from './routes/pending-verification'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as DonationsIdRouteImport } from './routes/donations.$id'
 import { Route as DonorIndexRouteImport } from './routes/donor.index'
 import { Route as NgoIndexRouteImport } from './routes/ngo.index'
 import { Route as DonorDonationsNewRouteImport } from './routes/donor.donations.new'
@@ -23,6 +28,11 @@ import { Route as DonorDonationsIdEditRouteImport } from './routes/donor.donatio
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DonorRoute = DonorRouteImport.update({
@@ -40,14 +50,34 @@ const NgoRoute = NgoRouteImport.update({
   path: '/ngo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PendingVerificationRoute = PendingVerificationRouteImport.update({
   id: '/pending-verification',
   path: '/pending-verification',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const DonationsIdRoute = DonationsIdRouteImport.update({
+  id: '/donations/$id',
+  path: '/donations/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DonorIndexRoute = DonorIndexRouteImport.update({
@@ -73,11 +103,16 @@ const DonorDonationsIdEditRoute = DonorDonationsIdEditRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/donor': typeof DonorRouteWithChildren
   '/login': typeof LoginRoute
   '/ngo': typeof NgoRouteWithChildren
+  '/notifications': typeof NotificationsRoute
   '/pending-verification': typeof PendingVerificationRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/donations/$id': typeof DonationsIdRoute
+  '/admin/': typeof AdminIndexRoute
   '/donor/': typeof DonorIndexRoute
   '/ngo/': typeof NgoIndexRoute
   '/donor/donations/new': typeof DonorDonationsNewRoute
@@ -86,8 +121,12 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/notifications': typeof NotificationsRoute
   '/pending-verification': typeof PendingVerificationRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/donations/$id': typeof DonationsIdRoute
+  '/admin': typeof AdminIndexRoute
   '/donor': typeof DonorIndexRoute
   '/ngo': typeof NgoIndexRoute
   '/donor/donations/new': typeof DonorDonationsNewRoute
@@ -96,11 +135,16 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/donor': typeof DonorRouteWithChildren
   '/login': typeof LoginRoute
   '/ngo': typeof NgoRouteWithChildren
+  '/notifications': typeof NotificationsRoute
   '/pending-verification': typeof PendingVerificationRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/donations/$id': typeof DonationsIdRoute
+  '/admin/': typeof AdminIndexRoute
   '/donor/': typeof DonorIndexRoute
   '/ngo/': typeof NgoIndexRoute
   '/donor/donations/new': typeof DonorDonationsNewRoute
@@ -110,11 +154,16 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/donor'
     | '/login'
     | '/ngo'
+    | '/notifications'
     | '/pending-verification'
+    | '/profile'
     | '/register'
+    | '/donations/$id'
+    | '/admin/'
     | '/donor/'
     | '/ngo/'
     | '/donor/donations/new'
@@ -123,8 +172,12 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
+    | '/notifications'
     | '/pending-verification'
+    | '/profile'
     | '/register'
+    | '/donations/$id'
+    | '/admin'
     | '/donor'
     | '/ngo'
     | '/donor/donations/new'
@@ -132,11 +185,16 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/donor'
     | '/login'
     | '/ngo'
+    | '/notifications'
     | '/pending-verification'
+    | '/profile'
     | '/register'
+    | '/donations/$id'
+    | '/admin/'
     | '/donor/'
     | '/ngo/'
     | '/donor/donations/new'
@@ -145,11 +203,15 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   DonorRoute: typeof DonorRouteWithChildren
   LoginRoute: typeof LoginRoute
   NgoRoute: typeof NgoRouteWithChildren
+  NotificationsRoute: typeof NotificationsRoute
   PendingVerificationRoute: typeof PendingVerificationRoute
+  ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
+  DonationsIdRoute: typeof DonationsIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -159,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/donor': {
@@ -182,6 +251,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NgoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pending-verification': {
       id: '/pending-verification'
       path: '/pending-verification'
@@ -189,11 +265,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PendingVerificationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/donations/$id': {
+      id: '/donations/$id'
+      path: '/donations/$id'
+      fullPath: '/donations/$id'
+      preLoaderRoute: typeof DonationsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/donor/': {
@@ -227,6 +324,16 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 interface DonorRouteChildren {
   DonorIndexRoute: typeof DonorIndexRoute
   DonorDonationsNewRoute: typeof DonorDonationsNewRoute
@@ -253,11 +360,15 @@ const NgoRouteWithChildren = NgoRoute._addFileChildren(NgoRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   DonorRoute: DonorRouteWithChildren,
   LoginRoute: LoginRoute,
   NgoRoute: NgoRouteWithChildren,
+  NotificationsRoute: NotificationsRoute,
   PendingVerificationRoute: PendingVerificationRoute,
+  ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
+  DonationsIdRoute: DonationsIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

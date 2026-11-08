@@ -57,12 +57,12 @@ export function DonationForm({
   onSubmit,
   onCancel,
 }: {
-  initial?: Donation;
-  defaultAddress?: string;
-  submitting?: boolean;
+  initial?: Donation | undefined;
+  defaultAddress?: string | undefined;
+  submitting?: boolean | undefined;
   submitLabel: string;
   onSubmit: (input: DonationInput) => void;
-  onCancel?: () => void;
+  onCancel?: (() => void) | undefined;
 }) {
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(initial?.imageUrl ?? null);

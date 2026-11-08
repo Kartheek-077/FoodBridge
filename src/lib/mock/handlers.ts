@@ -31,12 +31,19 @@ export interface MockFile {
   dataUrl: string | null;
 }
 
+type KnownKey =
+  | "role" | "email" | "password" | "name" | "phone" | "address" | "organizationType" | "organizationName"
+  | "registrationNumber" | "serviceArea" | "document" | "title" | "description" | "foodType" | "quantity"
+  | "unit" | "pickupAddress" | "pickupWindowStart" | "pickupWindowEnd" | "expiresAt" | "notes" | "image"
+  | "pickupTime" | "status" | "reason" | "action" | "search" | "location" | "expiringSoon" | "page";
+type Bag = Partial<Record<KnownKey, unknown>> & Record<string, unknown>;
+
 export interface MockRequest {
   method: string;
   url: string;
-  params?: Record<string, unknown>;
-  body?: Record<string, unknown> | null;
-  token?: string | null;
+  params?: Record<string, unknown> | undefined;
+  body?: Record<string, unknown> | null | undefined;
+  token?: string | null | undefined;
 }
 
 export interface MockResponse {
@@ -148,7 +155,7 @@ function findDonation(db: MockDb, id: string) {
   return d;
 }
 
-function validateDonationBody(body: Record<string, unknown>, partial = false) {
+function validateDonationBody(body: Bag, partial = false) {
   const errors: string[] = [];
   const title = str(body.title);
   const quantity = Number(body.quantity);
@@ -175,10 +182,10 @@ function validateDonationBody(body: Record<string, unknown>, partial = false) {
 
 function route(db: MockDb, req: MockRequest): unknown {
   const method = req.method.toUpperCase();
-  const path = req.url.replace(/^https?:\/\/[^/]+/, "").replace(/^\/api/, "").split("?")[0];
+  const path = req.url.replace(/^https?:\/\/[^/]+/, "").replace(/^\/api/, "").split("?")[0] ?? "";
   const seg = path.split("/").filter(Boolean);
-  const body = req.body ?? {};
-  const params = req.params ?? {};
+  const body: Bag = req.body ?? {};
+  const params: Bag = req.params ?? {};
 
   // ---------- AUTH ----------
   if (seg[0] === "auth") {
@@ -540,7 +547,7 @@ function buildStats(db: MockDb, full: boolean): AdminStats {
     { key: "non-veg", name: "Non-veg" },
     { key: "both", name: "Mixed" },
   ];
-  const orgTypes = [
+  const orgTypes: [string, string][] = [
     ["restaurant", "Restaurants"],
     ["hotel", "Hotels"],
     ["marriage_hall", "Marriage halls"],

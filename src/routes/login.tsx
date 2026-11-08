@@ -16,8 +16,11 @@ import { LogoMark } from "@/components/Logo";
 import heroImg from "@/assets/food-buffet.jpg";
 
 export const Route = createFileRoute("/login")({
-  validateSearch: (s: Record<string, unknown>): { redirect?: string } => ({
-    redirect: typeof s.redirect === "string" && s.redirect.startsWith("/") ? s.redirect : undefined,
+  validateSearch: (s: Record<string, unknown>): { redirect?: string | undefined } => {
+    const r = s["redirect"];
+    return { redirect: typeof r === "string" && r.startsWith("/") ? r : undefined };
+  },
+  _x: ({
   }),
   head: () => ({
     meta: [
