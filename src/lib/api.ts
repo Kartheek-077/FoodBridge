@@ -112,9 +112,9 @@ export const donationsApi = {
   update: async (id: string, input: Partial<DonationInput>) =>
     (await api.put<Donation>(`/donations/${id}`, donationFormData(input))).data,
   remove: async (id: string) => (await api.delete<{ success: boolean }>(`/donations/${id}`)).data,
-  claim: async (id: string, pickupTime?: string) =>
+  claim: async (id: string, pickupTime?: string | undefined) =>
     (await api.post<Donation>(`/donations/${id}/claim`, { pickupTime })).data,
-  updateStatus: async (id: string, status: "collected" | "cancelled", reason?: string) =>
+  updateStatus: async (id: string, status: "collected" | "cancelled", reason?: string | undefined) =>
     (await api.patch<Donation>(`/donations/${id}/status`, { status, reason })).data,
 };
 
@@ -133,7 +133,7 @@ export const notificationsApi = {
 export const adminApi = {
   ngos: async (status: "pending" | "verified" | "rejected" | "all" = "pending") =>
     (await api.get<User[]>("/admin/ngos", { params: { status } })).data,
-  verifyNgo: async (id: string, action: "approve" | "reject", reason?: string) =>
+  verifyNgo: async (id: string, action: "approve" | "reject", reason?: string | undefined) =>
     (await api.patch<User>(`/admin/ngos/${id}/verify`, { action, reason })).data,
   stats: async () => (await api.get<AdminStats>("/admin/stats")).data,
   /** User list. Not in the original contract; the backend should add GET /admin/users. */
