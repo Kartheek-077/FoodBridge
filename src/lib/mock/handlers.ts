@@ -177,7 +177,7 @@ function validateDonationBody(body: Bag, partial = false) {
     if (Number.isNaN(exp)) errors.push("Expiry is required.");
     else if (exp <= Date.now()) errors.push("Expiry must be in the future.");
   }
-  if (errors.length) throw new HttpError(422, errors[0]);
+  if (errors.length) throw new HttpError(422, errors[0] ?? "Invalid donation details.");
 }
 
 function route(db: MockDb, req: MockRequest): unknown {
