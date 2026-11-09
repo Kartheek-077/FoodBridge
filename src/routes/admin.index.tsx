@@ -529,7 +529,7 @@ function AnalyticsTab() {
       <ChartCard title="Donations by status">
         <ResponsiveContainer width="100%" height={240}>
           <PieChart>
-            <Pie data={statusData} dataKey="value" nameKey="name" innerRadius={55} outerRadius={90} paddingAngle={3}>
+            <Pie data={statusData} dataKey="value" nameKey="name" innerRadius={55} outerRadius={90} paddingAngle={3} isAnimationActive={false}>
               {statusData.map((s) => (
                 <Cell key={s.key} fill={STATUS_COLORS[s.key]} />
               ))}
