@@ -59,7 +59,7 @@ function LoginPage() {
     setError(null);
     try {
       const user = await login(v.email, v.password);
-      toast.success(`Welcome back, ${user.name.split(" ")[0]}!`);
+      toast.success(`Welcome back, ${user.name}!`);
       void navigate({ to: redirect ?? homePathForRole(user.role), replace: true });
     } catch (e) {
       setError(getErrorMessage(e));
