@@ -44,8 +44,9 @@ export function AppHeader() {
   const items = navFor(role);
 
   const handleLogout = () => {
+    setOpen(false);
     logout();
-    void navigate({ to: "/login", replace: true });
+    void navigate({ to: "/login", search: { redirect: undefined }, replace: true });
   };
 
   const initials = (user?.name ?? "?")
